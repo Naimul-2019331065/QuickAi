@@ -2,7 +2,7 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
-import Sidebar from "../components/SideBar";
+import Sidebar from "../components/Sidebar";
 import { SignIn, useUser } from "@clerk/react";
 
 const Layout = () => {
@@ -13,7 +13,7 @@ const Layout = () => {
     return user ? (
         <div className="flex flex-col justify-start items-start h-screen">
             <nav className="w-full px-8 min-h-14 flex items-center justify-between border-b border-gray-200">
-                <img src={assets.logo} alt="logo" onClick={()=>navigate("/")} />
+                <img src={assets.logo} className="w-32 sm:w-44 cursor-pointer"  alt="logo" onClick={()=>navigate("/")} />
                 {sidebar ? (
                     <X
                         onClick={() => setSidebar(false)}

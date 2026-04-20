@@ -1,10 +1,11 @@
-import { useClerk, useUser } from "@clerk/react";
+import {  Show, useClerk, useUser } from "@clerk/react";
 import {
     Eraser,
     FileText,
     Hash,
     House,
     Image,
+    LogOut,
     Scissors,
     SquarePen,
     Users,
@@ -29,7 +30,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
     return (
         <div
             className={`w-60 bg-white border-r border-gray-200 flex flex-col justify-between items-center max-sm:absolute top-14
-                    bottom-0     ${sidebar ? "translate-x-0" : "max-sm:translate-x-full"} transition-all duration-300 ease-in-out `}
+                    bottom-0 ${sidebar ? "translate-x-0" : "max-sm:translate-x-full"} transition-all duration-300 ease-in-out `}
         >
             <div className="my-7 w-full">
                 <img
@@ -45,8 +46,9 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                             to={to}
                             end={to === "/ai"}
                             onClick={() => setSidebar(false)}
-                            className={({ isActive }) => `
-                        px-3.5 py-2.5 flex items-center gap-3 rounded ${isActive ? "bg-gradient-to-r from-[#3c81f6] to-[#9234ea] text-white" : ""}`}
+                            className={({ isActive }) =>
+                                `px-3.5 py-2.5 flex items-center gap-3 rounded hover:bg-gray-200 ${isActive ? "bg-linear-to-r from-[#3c81f6] to-[#9234ea] text-white" : ""}`
+                            }
                         >
                             {({ isActive }) => (
                                 <>
@@ -59,6 +61,34 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                         </NavLink>
                     ))}
                 </div>
+            </div>
+            <div className="w-full border-t border-gray-200 p-4 px-7 flex items-center justify-between">
+                <div
+                    onClick={openUserProfile}
+                    className="flex gap-2 items-center cursor-pointer"
+                >
+                    <img
+                        src={user.imageUrl}
+                        className="w-8 rounded-full"
+                        alt="user avater"
+                    />
+                    <div>
+                        <h1 className="text-sm font-medium">{user.fullName}</h1>
+                        <p className="text-xs text-gray-500">
+                            <Show
+                                when={{ plan: "premium" }}
+                                fallback={<span>Free</span>}
+                            >
+                                <span>Premium</span>
+                            </Show>
+                            Plan
+                        </p>
+                    </div>
+                </div>
+                <LogOut
+                    onClick={signOut}
+                    className="w-4.5 text-gray-400 hover-text-gray:700 transition cursor pointer"
+                />
             </div>
         </div>
     );
